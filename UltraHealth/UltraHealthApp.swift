@@ -9,9 +9,21 @@ import SwiftUI
 
 @main
 struct UltraHealthApp: App {
+    @AppStorage("hasCompletedOnboarding") var hasCompletedOnboarding = false
+
+    @State private var selectedTab: AppTab = .home
+    @State private var showingAddModal = false
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            if hasCompletedOnboarding {
+                FanningNavigationView(
+                    selectedTab: $selectedTab,
+                    showingAddModal: $showingAddModal
+                )
+            } else {
+                OnboardingView()
+            }
         }
     }
 }
